@@ -22,4 +22,10 @@ html(lang='en', ng-app='myApp')
       if ENV_DEVELOPMENT
         script(src='http://localhost:35729/livereload.js')
   body
-    block content
+  nav.navbar-fixed-top.navbar-dark.bg-inverse.p-t-1.p-b-1
+    a.navbar-brand.m-l-3(href='/') Horse Racing Calculator
+    ul.nav.navbar-nav.pull-xs-right.list-unstyled.m-r-3
+      li
+        a.nav-item(href='https://github.com/tgrowden/horse-racing-calculator', target='_blank')
+          i.fa.fa-3x.fa-github
+  block content
