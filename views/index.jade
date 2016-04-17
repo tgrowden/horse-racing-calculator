@@ -103,8 +103,8 @@ block content
                 span $
                 span {{ result.profit }}
       .text-xs-center.p-t-3
-        .col-md-6
+        .col-xs-12.col-md-6
           input#raceName.form-control(type="text", ng-model="raceName", placeholder="Race Name")
-        .col-md-6
+        .col-xs-12.col-md-6
           textarea#raceNotes.form-control(ng-model='raceNotes', placeholder='Notes')
         button.btn.btn-primary.m-t-2(ng-click="savePDF()", data-toggle='tooltip', data-placement='top', title='Save Race Results as PDF') Save Results
