@@ -1,0 +1,25 @@
+doctype html
+html(lang='en', ng-app='myApp')
+  head
+    meta(charset='UTF-8')
+    meta(name='viewport', content='width=device-width')
+    title= title
+    block css
+      link(rel='stylesheet', href='/components/tether/dist/css/tether.min.css')
+      link(rel='stylesheet', href='/components/bootstrap/dist/css/bootstrap.min.css')
+      link(rel='stylesheet', href='/components/font-awesome/css/font-awesome.min.css')
+      link(rel='stylesheet', href='/css/style.css')
+    block js
+      script(src='/components/jquery/dist/jquery.min.js')
+      script(src='/components/tether/dist/js/tether.min.js')
+      script(src='/components/bootstrap/dist/js/bootstrap.min.js')
+      script(src='/components/remarkable-bootstrap-notify/dist/bootstrap-notify.min.js')
+      script(src='/components/jspdf/dist/jspdf.min.js')
+      script(src='/components/jspdf-autotable/dist/jspdf.plugin.autotable.js')
+      script(src='/components/angular/angular.min.js')
+      script(src='/js/split.js')
+      script(src='/js/main.js')
+      if ENV_DEVELOPMENT
+        script(src='http://localhost:35729/livereload.js')
+  body
+    block content
