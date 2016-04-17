@@ -34,8 +34,10 @@ block content
               td
                 i.fa.fa-2x.fa-trash-o(aria-hidden='true', type='button', ng-click='removeHorse($index)')
     .col-xs-12.text-xs-center.p-b-3
-      button.m-r-1.btn.btn-primary(ng-click='calculateBets()') Calculate
-      button.m-l-1.btn.btn-danger(ng-click='reset()') Reset
+      .col-xs-12.text-xs-center.col-md-5.text-md-right.m-t-1
+        button.btn.btn-primary(ng-click='calculateBets()') Calculate
+      .col-xs-12.text-xs-center.col-md-5.text-md-right.m-t-1
+        button.btn.btn-danger(ng-click='reset()') Reset
     .row.p-b-3
       legend Results
       .table-responsive
