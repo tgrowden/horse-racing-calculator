@@ -126,9 +126,11 @@ angular.module('myApp', [])
           var doc = new jsPDF('p', 'pt');
           doc.text(20, 20, $scope.raceName);
           doc.autoTable(columns, rows);
-          doc.addPage();
-          var notes = doc.splitTextToSize($scope.raceNotes, 550);
-          doc.text(20, 20, notes);
+          if ($scope.raceNotes) {
+            doc.addPage();
+            var notes = doc.splitTextToSize($scope.raceNotes, 550);
+            doc.text(20, 20, notes);
+          }
           doc.save($scope.raceName + '.pdf');
         } else {
           Notify("You haven't added enough horses!", "danger");
