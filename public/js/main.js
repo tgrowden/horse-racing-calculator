@@ -8,7 +8,7 @@ function Notify(msg, type) {
 angular.module('myApp', [])
   .controller('addController', ['$scope', function($scope) {
     $scope.horses = [];
-    $scope.betAmount = 100;
+    $scope.betAmount = '';
     $scope.addHorse = function() {
       var horse = {
         name: $scope.name,
@@ -27,6 +27,7 @@ angular.module('myApp', [])
       $scope.horses.splice(index, 1);
     };
     $scope.calculateBets = function() {
+      $('#calculate').tooltip('hide');
       if ($scope.horses.length > 1) {
         if (typeof $scope.betAmount != "undefined") {
           var split = new Split($scope.betAmount);
@@ -70,6 +71,43 @@ angular.module('myApp', [])
       $scope.name = "";
       $scope.odds = "";
       $scope.raceName = "";
+      $scope.raceNotes = "";
+    };
+    $scope.dummyData = function() {
+      $scope.horses = [
+        {
+          name: "Honor Code",
+          odds: 4.70
+        },
+        {
+          name: "Keen Ice",
+          odds: 9.70
+        },
+        {
+          name: "Tonalist",
+          odds: 6
+        },
+        {
+          name: "Frosted",
+          odds: 11.30
+        },
+        {
+          name: "Gleneagles (IRE)",
+          odds: 11.10
+        },
+        {
+          name: "Effinex",
+          odds: 33
+        },
+        {
+          name: "Hard Aces",
+          odds: 72.8
+        }
+      ];
+      $scope.betAmount = 100;
+      $scope.raceName = "Breeders' Cup - 2015";
+      $scope.raceNotes = '\'American Pharaoh\' was excluded from the lineup because his odds were 0.7--an outlier such as this makes it impossible to calculate results.';
+      $('#calculate').tooltip('show');
     };
     $scope.savePDF = function() {
       if (typeof $scope.raceName != "undefined") {
@@ -86,7 +124,11 @@ angular.module('myApp', [])
             count++;
           }
           var doc = new jsPDF('p', 'pt');
+          doc.text(20, 20, $scope.raceName);
           doc.autoTable(columns, rows);
+          doc.addPage();
+          var notes = doc.splitTextToSize($scope.raceNotes, 550);
+          doc.text(20, 20, notes);
           doc.save($scope.raceName + '.pdf');
         } else {
           Notify("You haven't added enough horses!", "danger");
@@ -100,4 +142,10 @@ angular.module('myApp', [])
 
 $(function() {
   $('[data-toggle="tooltip"]').tooltip();
+  $('[data-toggle="tooltip"]').on('click', function() {
+    $(this).tooltip('hide');
+  });
+  $('#helpIcon').on("click", function() {
+    $('#helpModal').modal();
+  });
 });

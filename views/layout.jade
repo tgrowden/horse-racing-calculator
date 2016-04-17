@@ -16,16 +16,11 @@ html(lang='en', ng-app='myApp')
       script(src='/components/remarkable-bootstrap-notify/dist/bootstrap-notify.min.js')
       script(src='/components/jspdf/dist/jspdf.min.js')
       script(src='/components/jspdf-autotable/dist/jspdf.plugin.autotable.js')
+      script(src='/components/jspdf-plugins/plugins/split_text_to_size.js')
       script(src='/components/angular/angular.min.js')
       script(src='/js/split.js')
       script(src='/js/main.js')
       if ENV_DEVELOPMENT
         script(src='http://localhost:35729/livereload.js')
   body
-  nav.navbar-fixed-top.navbar-dark.bg-inverse.p-t-1.p-b-1
-    a.navbar-brand.m-l-3(href='/') Horse Racing Calculator
-    ul.nav.navbar-nav.pull-xs-right.list-unstyled.m-r-3
-      li
-        a.nav-item(href='https://github.com/tgrowden/horse-racing-calculator', target='_blank')
-          i.fa.fa-3x.fa-github
-  block content
+    block content

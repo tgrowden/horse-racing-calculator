@@ -1,7 +1,37 @@
 extends layout
 
 block content
+  nav.navbar-fixed-top.navbar-dark.bg-inverse.p-t-1.p-b-1
+    a.navbar-brand.m-l-3.p-t-1(href='/') Horse Racing Calculator
+    ul.nav.navbar-nav.pull-xs-right.m-r-3
+      li.nav-item.p-r-1.p-l-1
+        span#helpIcon.nav-link(data-toggle="tooltip", data-placement='left', title='Help')
+          i.fa.fa-3x.fa-question
+      li.nav-item.p-r-1.p-l-1
+        a.nav-link(href='https://github.com/tgrowden/horse-racing-calculator', target='_blank', data-toggle='tooltip', data-placement='left', title='Check out the code on Github!')
+          i.fa.fa-3x.fa-github
   .container#mainContent(ng-controller="addController")
+    // Modal
+    #helpModal.modal.fade(tabindex='-1', role='dialog', aria-labelledby='myModalLabel', aria-hidden='true')
+      .modal-dialog(role='document')
+        .modal-content
+          .modal-header
+            button.close(type='button', data-dismiss='modal', aria-label='Close')
+              span(aria-hidden='true') ×
+            h4#myModalLabel.modal-title A webapp for betting on every competitor and winning no matter what*
+          .modal-body
+            p
+              | This webapp uses 
+              a(href='https://github.com/se1exin/split', target='_blank') Split
+              |  to calculate the odds, so check out the code!
+            p
+              | Still confused? 
+              button.btn.btn-sm.btn-primary(ng-click='dummyData()', data-dismiss='modal') Click Here
+              |  to fill in some dummy data.
+          .modal-footer
+            .text-xs-left.text-muted
+              *Does not work with all odds vendors due to Math. For example TAB (Australia) seems to have figured out how to calculate their odds so that there is no way for you to profit by betting on every competitor. This can usually be circumvented by excluding outliers in the event.
+    //end Modal
     .row.p-b-3
       legend Amount to Bet
       .col-xs-10.col-xs-offset-2.col-sm-6.col-sm-offset-6.col-md-4.col-md-offset-4.form-group
@@ -35,7 +65,7 @@ block content
                 i.fa.fa-2x.fa-trash-o(aria-hidden='true', type='button', ng-click='removeHorse($index)', data-toggle='tooltip', data-placement='top', title="Remove from lineup")
     .col-xs-12.text-xs-center.p-b-3
       .col-xs-12.text-xs-center.col-md-5.text-md-right.m-t-1
-        button.btn.btn-primary(ng-click='calculateBets()', data-toggle='tooltip', data-placement='top', title='Calculate your odds!') Submit
+        button#calculate.btn.btn-primary(ng-click='calculateBets()', data-toggle='tooltip', data-placement='top', title='Calculate your odds!') Calculate
       .col-xs-12.text-xs-center.col-md-5.text-md-right.m-t-1
         button.btn.btn-danger(ng-click='reset()', data-toggle='tooltip', data-placement='top', title='Reset All Input Data') Reset
     .row.p-b-3
@@ -55,29 +85,26 @@ block content
             tr(ng-repeat='result in results')
               th(scope="row") {{ $index + 1}}
               td
-                //input.form-control(type='text', value='{{ result.id }}', readonly)
                 strong {{ result.id }}
               td
-                //input.form-control(type='text', value="{{ result.odds }}", readonly)
                 span {{ result.odds }}
               td
-                //input.form-control(type='text', value="{{ result.bet }}", readonly)
                 span $
                 span {{ result.bet }}
               td
-                //input.form-control(type='text', value="{{ result.result }}", readonly)
                 span $
                 span {{ result.result }}
               td
-                //input.form-control(type='text', value="{{ result.resultLessBet }}", readonly)
                 strong - 
                 span $
                 span {{ result.resultLessBet }}
               td
-                //input.form-control(type='text', value="{{ result.profit }}", readonly)
                 strong + 
                 span $
                 span {{ result.profit }}
       .text-xs-center.p-t-3
-        input#raceName.form-control(type="text", ng-model="raceName", placeholder="Race Name")
+        .col-md-6
+          input#raceName.form-control(type="text", ng-model="raceName", placeholder="Race Name")
+        .col-md-6
+          textarea#raceNotes.form-control(ng-model='raceNotes', placeholder='Notes')
         button.btn.btn-primary.m-t-2(ng-click="savePDF()", data-toggle='tooltip', data-placement='top', title='Save Race Results as PDF') Save Results
