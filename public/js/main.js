@@ -73,23 +73,31 @@ angular.module('myApp', [])
     };
     $scope.savePDF = function() {
       if (typeof $scope.raceName != "undefined") {
-        $scope.calculateBets();
-        var columns = ["#", "Name", "Odds", "Bet", "Win", "Less Bet", "Profit"];
-        var rows = [];
-        var count = 1;
-        for (var i in $scope.results) {
-          console.log($scope.results[i]);
-          var data = [];
-          data.push(count, $scope.results[i].id, $scope.results[i].odds, $scope.results[i].bet, $scope.results[i].result, $scope.results[i].resultLessBet, $scope.results[i].profit);
-          rows.push(data);
-          count++;
+        if ($scope.horses.length > 1) {
+          $scope.calculateBets();
+          var columns = ["#", "Name", "Odds", "Bet", "Win", "Less Bet", "Profit"];
+          var rows = [];
+          var count = 1;
+          for (var i in $scope.results) {
+            console.log($scope.results[i]);
+            var data = [];
+            data.push(count, $scope.results[i].id, $scope.results[i].odds, $scope.results[i].bet, $scope.results[i].result, $scope.results[i].resultLessBet, $scope.results[i].profit);
+            rows.push(data);
+            count++;
+          }
+          var doc = new jsPDF('p', 'pt');
+          doc.autoTable(columns, rows);
+          doc.save($scope.raceName + '.pdf');
+        } else {
+          Notify("You haven't added enough horses!", "danger");
         }
-        var doc = new jsPDF('p', 'pt');
-        doc.autoTable(columns, rows);
-        doc.save($scope.raceName + '.pdf');
       } else {
         Notify("Please enter a Race Name", "danger");
       }
     };
   }
 ]);
+
+$(function() {
+  $('[data-toggle="tooltip"]').tooltip();
+});
